@@ -1,9 +1,8 @@
 <?php
-
+session_start();
 if($_POST['action'] == 'login'){
     if(!empty($_POST['username']) && !empty($_POST['password'])){
         if($_POST['username'] == 'cueblocks' && $_POST['password'] == 'cueblocks'){
-            session_start();
             $_SESSION["username"] = "cueblocks";
             echo "success";
         }else{

@@ -1,5 +1,11 @@
 <?php
-include "header.php";
+    include "header.php";
+    session_start();
+    if(!empty($_SESSION["username"])){
+        header("Location: /admin-dashboard.php");
+        exit();
+    }
+
 ?>
 <form id="login-form" method="post">
     <span class="login-error validation-error"></span>

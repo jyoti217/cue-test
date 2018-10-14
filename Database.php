@@ -15,9 +15,6 @@ class Database{
     }
     private function getLink()
     {
-        /*if(self::_link === null) {
-            new Database();
-        }*/
         return $this->_link ;
     }
 
@@ -42,9 +39,12 @@ class Database{
 
     function getUserDetails($user_id){
         $conn = $this->getLink();
-        $sql = "SELECT * FROM users where id = $user_id";
-        $ret = array();
-        if($result = $conn->query($sql)){
+        $user_id = $conn->real_escape_string($user_id);
+        $sql = "SELECT * FROM users where id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        if($result = $stmt->get_result()){
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $result->free();
@@ -54,6 +54,7 @@ class Database{
         } else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
+        $stmt->close();
         return $row;
     }
 
@@ -77,9 +78,13 @@ class Database{
 
     function getUserSkills($user_id){
         $conn = $this->getLink();
-        $sql = "SELECT skills.title as skill,skills.id as skill_id, user_skills.id as id, skills.category_id, skill_categories.title as category, user_skills.marks FROM user_skills JOIN skills ON user_skills.skill_id = skills.id JOIN skill_categories ON skills.category_id = skill_categories.id WHERE user_id=$user_id";
+        $user_id = $conn->real_escape_string($user_id);
         $ret = array();
-        if($result = $conn->query($sql)){
+        $sql = "SELECT skills.title as skill,skills.id as skill_id, user_skills.id as id, skills.category_id, skill_categories.title as category, user_skills.marks FROM user_skills JOIN skills ON user_skills.skill_id = skills.id JOIN skill_categories ON skills.category_id = skill_categories.id WHERE user_id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        if($result = $stmt->get_result()){
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()){
                     $ret[$row['category']][] = $row;
@@ -91,6 +96,7 @@ class Database{
         } else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
         }
+        $stmt->close();
         return $ret;
     }
 

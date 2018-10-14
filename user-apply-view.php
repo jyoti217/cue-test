@@ -10,6 +10,7 @@
     $user_id = $_GET['user_id'];
     $user = $db->getUserDetails($user_id);
     $userSkills = $db->getUserSkills($user_id);
+    //echo "<pre>"; print_r($userSkills);exit;
 ?>
 <form id="user-form" method="post">
     <div class="col-md-12">

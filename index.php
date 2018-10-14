@@ -139,7 +139,6 @@
 
             form.find('button').attr('disabled','disabled');
 
-
             if(first_name == ""){
                 error=1;
                 showError("#first_name","First name cannot be empty.");
@@ -193,6 +192,12 @@
                     if(!skill_marks_input.val()){
                         error=1;
                         skill_marks_input.parent().append('<span class="validation-error">Skill Marks are mandatory</span>');
+                    }else{
+                        var marks = parseFloat(skill_marks_input.val());
+                        if(marks<1 || marks>5){
+                            error=1;
+                            skill_marks_input.parent().append('<span class="validation-error">Please enter in the range 1 to 5</span>');
+                        }
                     }
                 });
             }
