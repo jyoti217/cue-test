@@ -123,6 +123,7 @@
             }
         });
         $("#user-form").submit(function(){
+            hideValidationError();
             var form = $(this);
             var error=0;
             var form = $(this);
