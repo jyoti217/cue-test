@@ -5,7 +5,6 @@
         header("Location: /admin-dashboard.php");
         exit();
     }
-
 ?>
 <form id="login-form" method="post">
     <span class="login-error validation-error"></span>
@@ -22,7 +21,6 @@
 <?php
 include "footer.php";
 ?>
-
 <script type="text/javascript">
     $('document').ready(function(){
         $('#login-form').submit(function(){

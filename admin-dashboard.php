@@ -9,8 +9,6 @@
     $db = new Database();
     $users = $db->getAllUsers();
 ?>
-
-
 <table class="table table-striped">
   <thead>
     <tr>
@@ -34,7 +32,6 @@
 
   </tbody>
 </table>
-
 <?php
     include "footer.php";
 ?>

@@ -13,8 +13,8 @@ class Database{
             exit();
         }
     }
-    private function getLink()
-    {
+
+    private function getLink(){
         return $this->_link ;
     }
 
@@ -49,7 +49,8 @@ class Database{
                 $row = $result->fetch_assoc();
                 $result->free();
             } else{
-                echo "No records matching your query were found.";
+                echo "<h2> 404 </h2>";
+                exit;
             }
         } else{
             echo "ERROR: Could not able to execute $sql. " . $conn->error;
@@ -128,7 +129,6 @@ class Database{
             return true;
         }
     }
-
      function saveUserSkill($conn, $data){
         $sql = "INSERT INTO user_skills (user_id, skill_id, marks) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);

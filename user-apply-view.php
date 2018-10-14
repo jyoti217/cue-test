@@ -10,6 +10,7 @@
     $user_id = $_GET['user_id'];
     $user = $db->getUserDetails($user_id);
     $userSkills = $db->getUserSkills($user_id);
+    $total_score = 0;
     //echo "<pre>"; print_r($userSkills);exit;
 ?>
 <form id="user-form" method="post">
@@ -70,7 +71,10 @@
         <p class="h4">Tell us about your skills</p>
     </div>
     <div class="row">
-        <?php foreach ($userSkills as $key=>$skill_set){?>
+        <?php foreach ($userSkills as $key=>$skill_set){
+            $total_score += $skill_set[0]['marks'];
+
+        ?>
 
             <div class="col-md-12 skills-container">
                 <div class="form-check">
@@ -95,6 +99,14 @@
                 </div>
             </div>
         <?php }?>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="state">Total Score</label>
+                <input type="text" class="form-control" id="state" name="state" value="<?php echo $total_score;?>" readonly>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="mx-auto p-3">
