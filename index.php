@@ -1,15 +1,8 @@
 <?php
     require_once "Database.php";
     include "header.php";
-
-    //$skill_sets = getSkills(getDbConnection());
     $db = new Database();
     $skill_sets = $db->getSkills();
-
-
-    /*echo "<pre>";
-    print_r($skill_sets)*/
-
 ?>
 <!--form start-->
 
@@ -119,7 +112,7 @@
 <?php
     include "footer.php";
 ?>
-<script>
+<script type="text/javascript">
     $( document ).ready(function() {
         $(".skill-category").change(function() {
             $('.skill-header .validation-error').hide();
@@ -185,7 +178,6 @@
                 error=1;
                 showError("#zip","Zip name cannot be empty.");
             }
-
             if($('.skill-category:checkbox:checked').length == 0){
                 error=1;
                 $('.skill-header').append('<span class="validation-error">You need to select at least one skill category</span>');

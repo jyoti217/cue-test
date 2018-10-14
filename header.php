@@ -13,8 +13,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <a class="logo">Fictive Personal Agency</a>
-           <!-- <div class="header-right">
-                <a class="active" href="#home">Logout</a>
-            </div>-->
+            <a class="logo">Fictive Personal Agency <?php if(!empty($_SESSION["username"])) echo "(".$_SESSION["username"].")";?></a>
+            <?php if(!empty($_SESSION["username"])){?>
+            <div class="header-right">
+                <!--<a class="active" href="/admin-check.php?action=logout">Logout</a>-->
+                <form action="/admin-check.php" method="post">
+                    <button type="submit" class="btn btn-primary" name="action" value="logout">Logout</button>
+                </form>
+            </div>
+            <?php }?>
         </div>

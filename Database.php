@@ -40,6 +40,59 @@ class Database{
         return $ret;
     }
 
+    function getUserDetails($user_id){
+        $conn = $this->getLink();
+        $sql = "SELECT * FROM users where id = $user_id";
+        $ret = array();
+        if($result = $conn->query($sql)){
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $result->free();
+            } else{
+                echo "No records matching your query were found.";
+            }
+        } else{
+            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+        }
+        return $row;
+    }
+
+    function getAllUsers(){
+        $conn = $this->getLink();
+        $sql = "SELECT * FROM users";
+        $ret = array();
+        if($result = $conn->query($sql)){
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()){
+                    $ret[] = $row;
+                }
+            } else{
+                echo "No records matching your query were found.";
+            }
+        } else{
+            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+        }
+        return $ret;
+    }
+
+    function getUserSkills($user_id){
+        $conn = $this->getLink();
+        $sql = "SELECT skills.title as skill,skills.id as skill_id, user_skills.id as id, skills.category_id, skill_categories.title as category, user_skills.marks FROM user_skills JOIN skills ON user_skills.skill_id = skills.id JOIN skill_categories ON skills.category_id = skill_categories.id WHERE user_id=$user_id";
+        $ret = array();
+        if($result = $conn->query($sql)){
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()){
+                    $ret[$row['category']][] = $row;
+                }
+                $result->free();
+            } else{
+                echo "No records matching your query were found.";
+            }
+        } else{
+            echo "ERROR: Could not able to execute $sql. " . $conn->error;
+        }
+        return $ret;
+    }
 
     public function saveUser($data){
         $conn = $this->getLink();
