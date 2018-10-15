@@ -2,7 +2,7 @@
     include "header.php";
     session_start();
     if(!empty($_SESSION["username"])){
-        header("Location: /admin-dashboard.php");
+        header("Location: ./admin-dashboard.php");
         exit();
     }
 ?>
@@ -40,12 +40,12 @@ include "footer.php";
             }
             if(error==0){
                 $.ajax({
-                    url: "/admin-check.php",
+                    url: "./admin-check.php",
                     type:"post",
                     data:{"username":username,"password":password,"action":'login'},
                     success: function(result){
                         if($.trim(result) == "success"){
-                            location.href="/admin-dashboard.php"
+                            location.href="./admin-dashboard.php"
                         }else if($.trim(result) == "false"){
                             $('.login-error').html('Invalid Email or Password').show();
                             form.find('input').addClass('error');

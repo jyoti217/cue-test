@@ -17,7 +17,7 @@
             <?php if(!empty($_SESSION["username"])){?>
             <div class="header-right">
                 <!--<a class="active" href="/admin-check.php?action=logout">Logout</a>-->
-                <form action="/admin-check.php" method="post">
+                <form action="./admin-check.php" method="post">
                     <button type="submit" class="btn btn-primary" name="action" value="logout">Logout</button>
                 </form>
             </div>

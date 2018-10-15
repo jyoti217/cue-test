@@ -12,9 +12,9 @@ if($_POST['action'] == 'login'){
 } else if($_POST['action'] == 'logout'){
     session_unset();
     session_destroy();
-    header("Location: /admin-login.php");
+    header("Location: ./admin-login.php");
     exit();
 } else {
-    header("Location: /admin-login.php");
+    header("Location: ./admin-login.php");
     exit();
 }

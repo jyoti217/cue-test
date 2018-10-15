@@ -7,6 +7,7 @@ class Database{
     private $_link;
 
     function __construct(){
+        //Create a database connection
         $this ->_link = new mysqli( $this->db_host, $this->db_user, $this->db_pass, $this->db_name );
         if ( mysqli_connect_errno() ) {
             printf("Connection failed: %s", mysqli_connect_error());
@@ -15,10 +16,12 @@ class Database{
     }
 
     private function getLink(){
+        //getter for database link
         return $this->_link ;
     }
 
     function getSkills(){
+        //get list of all skills category wise for application form
         $conn = $this->getLink();
         $sql = "SELECT skills.title as skill, skills.id as id, skills.category_id, skill_categories.title as category FROM skills LEFT JOIN skill_categories ON skills.category_id = skill_categories.id";
         $ret = array();
@@ -38,6 +41,7 @@ class Database{
     }
 
     function getUserDetails($user_id){
+        //get user details by user_id
         $conn = $this->getLink();
         $user_id = $conn->real_escape_string($user_id);
         $sql = "SELECT * FROM users where id = ?";
@@ -60,8 +64,9 @@ class Database{
     }
 
     function getAllUsers(){
+        //get a list of all applicants
         $conn = $this->getLink();
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM users ORDER BY id desc";
         $ret = array();
         if($result = $conn->query($sql)){
             if ($result->num_rows > 0) {
@@ -78,6 +83,7 @@ class Database{
     }
 
     function getUserSkills($user_id){
+        //get all skills for a particular id with relevant marks by user_id
         $conn = $this->getLink();
         $user_id = $conn->real_escape_string($user_id);
         $ret = array();
@@ -102,6 +108,7 @@ class Database{
     }
 
     public function saveUser($data){
+        //save aplicant details
         $conn = $this->getLink();
         $sql = "INSERT INTO users (first_name, last_name, email, city, state, zip, phone,  street) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
@@ -130,6 +137,7 @@ class Database{
         }
     }
      function saveUserSkill($conn, $data){
+        //save user kills by user_id and skill_id
         $sql = "INSERT INTO user_skills (user_id, skill_id, marks) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $user_id =  $data['user_id'];

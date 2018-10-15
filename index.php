@@ -14,13 +14,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="first_name">First Name</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name">
+                    <input type="text" class="form-control" id="first_name" name="first_name" maxlength="100">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="last_name">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name">
+                    <input type="text" class="form-control" id="last_name" name="last_name" maxlength="100">
                 </div>
             </div>
             <div class="col-md-6">
@@ -32,31 +32,31 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" class="form-control" id="phone" name="phone">
+                    <input type="text" class="form-control" id="phone" name="phone" maxlength="100">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="street">Street</label>
-                    <input type="text" class="form-control" id="street" name="street">
+                    <input type="text" class="form-control" id="street" name="street" maxlength="200">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="city">City</label>
-                    <input type="text" class="form-control" id="city" name="city">
+                    <input type="text" class="form-control" id="city" name="city" maxlength="100">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="zip">Zip</label>
-                    <input type="text" class="form-control" id="zip" name="zip">
+                    <input type="text" class="form-control" id="zip" name="zip" maxlength="10">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="state">State</label>
-                    <input type="text" class="form-control" id="state" name="state">
+                    <input type="text" class="form-control" id="state" name="state" maxlength="100">
                 </div>
             </div>
 
@@ -70,8 +70,8 @@
 
                 <div class="col-md-12 skills-container">
                     <div class="form-check">
-                        <input class="form-check-input skill-category" type="checkbox" value="1" name="category['<?php echo $key; ?>']">
-                        <label class="form-check-label" for="scripting_languages">
+                        <input class="form-check-input skill-category" type="checkbox" value="1" name="category['<?php echo $key; ?>']" id="<?php echo $key; ?>">
+                        <label class="form-check-label" for="<?php echo $key; ?>">
                             <?php echo $key; ?>
                         </label>
                     </div>
@@ -114,6 +114,7 @@
 ?>
 <script type="text/javascript">
     $( document ).ready(function() {
+        $('#user-form').trigger("reset");
         $(".skill-category").change(function() {
             $('.skill-header .validation-error').hide();
             if(this.checked) {
@@ -128,7 +129,7 @@
             var error=0;
             var form = $(this);
             var email_filter = /^[a-zA-Z0-9\+\.\_\%\-\+]{1,256}\@[a-zA-Z0-9][a-zA-Z0-9\-]{0,64}(\.[a-zA-Z0-9][a-zA-Z0-9\-]{0,25})+$/;
-            var phone_filter = /[0-9\-\(\)\s]+/
+            var phone_filter = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
             var first_name= $.trim(form.find("#first_name").val());
             var last_name= $.trim(form.find("#last_name").val());
             var email= $.trim(form.find("#email").val());
@@ -205,7 +206,7 @@
 
             if(error==0){
                 $.ajax({
-                    url: "/user-apply.php",
+                    url: "./user-apply.php",
                     type:"post",
                     data:new FormData(this),
                     contentType: false,       // The content type used when sending data to the server.
